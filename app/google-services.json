@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "624798877740",
+    "firebase_url": "https://ardent-window-344411-default-rtdb.firebaseio.com",
+    "project_id": "ardent-window-344411",
+    "storage_bucket": "ardent-window-344411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624798877740:android:a7e26a0009e8025ebda989",
+        "android_client_info": {
+          "package_name": "com.example.tintooth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624798877740-2cgh71t2usnpm32u70dvv92atjhlbl91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDShH-kxq84CpXvxY1cbHYYkRZB2dERmgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624798877740-2cgh71t2usnpm32u70dvv92atjhlbl91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
