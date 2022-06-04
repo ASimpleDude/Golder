@@ -6,31 +6,61 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText emailedit,passedit;
     private Button btnlogin,btnregister;
     private FirebaseAuth mAuth;
+    private ImageView facebookImg;
+    private CallbackManager callbackManager;
+    void bindingView(){
+        facebookImg = findViewById(R.id.facebook);
+    }
+    void bindingAction(){
+        facebookImg.setOnClickListener(this::onLoginWithFacebook);
+    }
+
+    private void onLoginWithFacebook(View view) {
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        bindingView();
+        bindingAction();
         mAuth=FirebaseAuth.getInstance();
 
         emailedit =findViewById(R.id.username);
         passedit = findViewById(R.id.password);
         btnlogin=findViewById(R.id.btnlogin);
         btnregister = findViewById(R.id.btnregister);
+
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +74,27 @@ public class LoginActivity extends AppCompatActivity {
                 register();
             }
         });
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+
     }
 
     private void register() {
