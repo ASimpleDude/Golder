@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TinTooth</string>
 
-    <string name="facebook_app_id">1234</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">56789</string>
+    <string name="facebook_app_id">289229306677796</string>
+    <string name="fb_login_protocol_scheme">fb289229306677796</string>
+    <string name="facebook_client_token">92159e2f3404e827c293e1f78fb3c14b</string>
 
 </resources>
