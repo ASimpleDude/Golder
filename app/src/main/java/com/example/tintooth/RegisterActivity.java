@@ -21,24 +21,25 @@ public class RegisterActivity  extends AppCompatActivity {
     private EditText emailedit,passedit;
     private Button btnregister;
     private FirebaseAuth mAuth;
+    void bindingView(){
+        emailedit =findViewById(R.id.username);
+        passedit = findViewById(R.id.password);
+        btnregister = findViewById(R.id.btnregister);
+    }
+    void bindingAction(){
+        btnregister.setOnClickListener(this:: btnregister);
+    }
+    private void btnregister(View view) {
+        register();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth=FirebaseAuth.getInstance();
-
-        emailedit =findViewById(R.id.username);
-        passedit = findViewById(R.id.password);
-        btnregister = findViewById(R.id.btnregister);
-
-
-        btnregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-            }
-        });
+        bindingView();
+        bindingAction();
     }
 
     private void register() {

@@ -38,9 +38,23 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     void bindingView(){
         facebookImg = findViewById(R.id.facebook);
+        emailedit =findViewById(R.id.username);
+        passedit = findViewById(R.id.password);
+        btnlogin=findViewById(R.id.btnlogin);
+        btnregister = findViewById(R.id.btnregister);
     }
     void bindingAction(){
+        btnlogin.setOnClickListener(this::onbtnlogin);
+        btnregister.setOnClickListener(this:: btnregister);
         facebookImg.setOnClickListener(this::onLoginWithFacebook);
+    }
+
+    private void btnregister(View view) {
+        register();
+    }
+
+    private void onbtnlogin(View view) {
+        login();
     }
 
     private static final String TAG = "FacebookLogin";
@@ -77,26 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         bindingView();
         bindingAction();
         mAuth=FirebaseAuth.getInstance();
-
-        emailedit =findViewById(R.id.username);
-        passedit = findViewById(R.id.password);
-        btnlogin=findViewById(R.id.btnlogin);
-        btnregister = findViewById(R.id.btnregister);
-
-
-        btnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-        btnregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-            }
-        });
-
         createFacebookReq();
     }
 
