@@ -96,6 +96,11 @@ public class LoginActivity extends AppCompatActivity {
                 register();
             }
         });
+
+        createFacebookReq();
+    }
+
+    private void createFacebookReq(){
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -115,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                         // App code
                     }
                 });
-
 
     }
 
