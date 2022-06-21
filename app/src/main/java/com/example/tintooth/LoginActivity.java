@@ -31,14 +31,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText useredit,passedit;
+    private EditText emailedit,passedit;
     private Button btnlogin,btnregister;
     private FirebaseAuth mAuth;
     private ImageView facebookImg;
     private CallbackManager callbackManager;
     void bindingView(){
         facebookImg = findViewById(R.id.facebook);
-        useredit =findViewById(R.id.username);
+        emailedit =findViewById(R.id.username);
         passedit = findViewById(R.id.password);
         btnlogin=findViewById(R.id.btnlogin);
         btnregister = findViewById(R.id.btnregister);
@@ -147,10 +147,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        String user,pass;
-        user = useredit.getText().toString();
+        String email,pass;
+        email = emailedit.getText().toString();
         pass = passedit.getText().toString();
-        if(TextUtils.isEmpty(user)){
+        if(TextUtils.isEmpty(email)){
             Toast.makeText(this,"Vui long nhap Email!!",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this,"Vui long nhap Email!!",Toast.LENGTH_SHORT).show();
             return;
         }
-        mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
