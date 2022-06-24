@@ -3,7 +3,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.tintooth.DAO.DbConnect;
 
@@ -18,6 +20,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference usersDb;
 
-
+    private ArrayList<String> al;
+    private ArrayAdapter arrayAdapter;
+    private Card card_data[];
     ListView listView;
+    List<Card> rowItems;
+
 //    List<cards> rowItems;
 
     @Override
@@ -45,60 +55,62 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUId = mAuth.getCurrentUser().getUid();
-
         checkUserSex();
+        al = new ArrayList<String>();
+        // from Cong Quan: this for loop is for testing only
+        for(int i=0;i<10;i++){
+            al.add("User "+i);
+        }
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.swipecard, R.id.helloText, al);
+        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
-//        rowItems = new ArrayList<cards>();
-//
-//        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
-//
-//        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-//
-//        flingContainer.setAdapter(arrayAdapter);
-//        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
-//            @Override
-//            public void removeFirstObjectInAdapter() {
-//                Log.d("LIST", "removed object!");
-//                rowItems.remove(0);
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onLeftCardExit(Object dataObject) {
-//
-//                cards obj = (cards) dataObject;
-//                String userId = obj.getUserId();
-//                usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
-//                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onRightCardExit(Object dataObject) {
-//                cards obj = (cards) dataObject;
-//                String userId = obj.getUserId();
-//                usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
-//                isConnectionMatch(userId);
-//                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//            }
-//
-//            @Override
-//            public void onScroll(float scrollProgressPercent) {
-//            }
-//        });
-//
-//
-//        // Optionally add an OnItemClickListener
-//        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClicked(int itemPosition, Object dataObject) {
-//                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
+        flingContainer.setAdapter(arrayAdapter);
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+                Log.d("LIST", "removed object!");
+                al.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                //Do something on the left!
+                //You also have access to the original object.
+                //If you want to use it just cast it (String) dataObject
+                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                // Ask for more data here
+                al.add("XML ".concat(String.valueOf(i)));
+                arrayAdapter.notifyDataSetChanged();
+                Log.d("LIST", "notified");
+                i++;
+            }
+
+            @Override
+            public void onScroll(float scrollProgressPercent) {
+
+            }
+        });
+
+
+        // Optionally add an OnItemClickListener
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void isConnectionMatch(String userId) {
@@ -162,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 //                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
 //                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
 //                        }
-//                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
+//                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
 //                        rowItems.add(item);
 //                        arrayAdapter.notifyDataSetChanged();
 //                    }
