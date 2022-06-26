@@ -2,6 +2,7 @@ package com.example.tintooth;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import com.example.tintooth.DAO.DbConnect;
 
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 //    private cards cards_data[];
 //    private com.example.tintooth.Cards.arrayAdapter arrayAdapter;
     private int i;
+    private TextView welcome;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String username;
 
     private FirebaseAuth mAuth;
 
@@ -44,11 +50,17 @@ public class MainActivity extends AppCompatActivity {
     List<Card> rowItems;
 
 //    List<cards> rowItems;
-
+private void bindingView() {
+    welcome = findViewById(R.id.welcomeEdt);
+    sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+    username = sharedPreferences.getString("username", "username not found");
+    welcome.setText("Hello " + username);
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bindingView();
 
 
         usersDb = FirebaseDatabase.getInstance().getReference().child("Users");

@@ -1,6 +1,7 @@
 package com.example.tintooth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,18 +37,38 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ImageView facebookImg;
     private CallbackManager callbackManager;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    public static final String SHARED_PREFS = "sharedPrefs";
     void bindingView(){
         facebookImg = findViewById(R.id.facebook);
         emailedit =findViewById(R.id.username);
         passedit = findViewById(R.id.password);
         btnlogin=findViewById(R.id.btnlogin);
         btnregister = findViewById(R.id.btnregister);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     }
     void bindingAction(){
+        if(!sharedPreferences.getString("username","").isEmpty()){
+            Intent it = new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(it);
+        }
         btnlogin.setOnClickListener(this::onbtnlogin);
         btnregister.setOnClickListener(this:: btnregister);
         facebookImg.setOnClickListener(this::onLoginWithFacebook);
     }
+    private void saveData(String inputUsername, String inputPassword) {
+        editor = sharedPreferences.edit();
+        editor.putString("username",inputUsername);
+        editor.putString("password",inputPassword);
+        editor.apply();
+    }
+    private void loadData(){
+        String loadUsername = sharedPreferences.getString("username", "");
+        emailedit.setText(loadUsername);
+    }
+
+
 
     private void btnregister(View view) {
         register();
@@ -89,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         bindingView();
+        bindingAction();
+        loadData();
         bindingAction();
         mAuth=FirebaseAuth.getInstance();
         createFacebookReq();
@@ -162,6 +185,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    saveData(email, pass);
                     Toast.makeText(getApplicationContext(),"Dang nhap thanh cong !!",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
