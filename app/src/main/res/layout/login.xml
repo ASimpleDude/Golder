@@ -44,7 +44,7 @@
         android:ems="10"
         android:hint="Email"
         android:background="@drawable/style_edit"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -10,77 +10,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="77dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="77dp"
-        android:layout_marginBottom="517dp"
         android:contentDescription="Golder_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/golder_logo" />
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="281dp"
         android:layout_height="73dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="431dp"
+        android:layout_marginTop="34dp"
         android:text="where you are gold in the eyes of others"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="78dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="368dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="78dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="308dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <RadioGroup
         android:id="@+id/ratioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="431dp"
-        android:layout_marginBottom="137dp"
         android:layout_marginStart="78dp"
         android:layout_marginEnd="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnregister"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/username">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -98,48 +91,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="78dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="156dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratioGroup" />
 
     <EditText
         android:id="@+id/repassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="78dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="84dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="Re-Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/btnregister"
         android:layout_width="165dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="26dp"
         android:backgroundTint="#93B857"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@+id/ratioGroup"
-        app:layout_constraintVertical_bias="0.825"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repassword"
         app:strokeColor="@color/black"
         app:strokeWidth="2dp" />
 
