@@ -23,8 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity  extends AppCompatActivity {
     private EditText usernameEdt,passedit,emailEdt;
-    private RadioGroup ratioGroup;
-    private RadioButton radio;
+
     private Button btnregister;
     private FirebaseAuth mAuth;
     void bindingView(){
@@ -32,9 +31,7 @@ public class RegisterActivity  extends AppCompatActivity {
         passedit = findViewById(R.id.password);
         btnregister = findViewById(R.id.btnregister);
         emailEdt = findViewById(R.id.email);
-        ratioGroup = findViewById(R.id.ratioGroup);
-        int selectId = ratioGroup.getCheckedRadioButtonId();
-        radio = findViewById(selectId);
+
     }
     void bindingAction(){
         btnregister.setOnClickListener(this:: btnregister);
@@ -59,9 +56,6 @@ public class RegisterActivity  extends AppCompatActivity {
         pass = passedit.getText().toString();
         email = emailEdt.getText().toString();
 
-        if(radio.getText()==null){
-            return;
-        }
 
         if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Vui long nhap Email!!",Toast.LENGTH_SHORT).show();
@@ -75,15 +69,6 @@ public class RegisterActivity  extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    String userId = mAuth.getCurrentUser().getUid();
-                    DatabaseReference currentUserDb =
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Users")
-                                    .child(radio.getText().toString())
-                                    .child(userId)
-                                    .child("name");
-                    currentUserDb.setValue(username);
-
                     Toast.makeText(getApplicationContext(),"Tao tài khoản thanh cong !!",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                     startActivity(intent);
