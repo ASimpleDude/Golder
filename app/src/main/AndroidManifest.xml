@@ -15,11 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TinTooth"
         tools:targetApi="31">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".Choose_Login_And_Reg"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="TinTooth"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
