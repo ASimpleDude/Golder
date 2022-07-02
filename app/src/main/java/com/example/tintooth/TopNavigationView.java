@@ -17,23 +17,23 @@ public class TopNavigationView {
         Log.d(TAG, "setupTopNavigation: setting up navigationview");
     }
 
-    public static void enableNavigation(final Context context, BottomNavigationViewEx view){
-         view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-             @Override
-             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                 switch (item.getItemId()){
-                     case R.id.profile:
-                         Intent i = new Intent(context, SettingsActivity.class);
-                         context.startActivity(i);
-                         break;
-                     case R.id.ic_matched:
-                         Intent intent =new Intent(context, MatchesActivity.class);
-                         context.startActivity(intent);
-                         break;
-
-                 }
-                 return false;
-             }
-         });
-    }
+//    public static void enableNavigation(final Context context, BottomNavigationViewEx view){
+//         view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//             @Override
+//             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                 switch (item.getItemId()){
+//                     case R.id.profile:
+//                         Intent i = new Intent(context, SettingsActivity.class);
+//                         context.startActivity(i);
+//                         break;
+//                     case R.id.ic_matched:
+//                         Intent intent =new Intent(context, MatchesActivity.class);
+//                         context.startActivity(intent);
+//                         break;
+//
+//                 }
+//                 return false;
+//             }
+//         });
+//    }
 }
