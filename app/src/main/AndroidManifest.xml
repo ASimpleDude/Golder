@@ -17,6 +17,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".BtnDisLikeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BtnLikeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MatchesActivity"
             android:exported="false" />
         <activity
