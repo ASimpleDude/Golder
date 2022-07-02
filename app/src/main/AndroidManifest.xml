@@ -23,7 +23,7 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
@@ -39,7 +39,7 @@
             android:name=".Choose_Login_And_Reg"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true"
             android:label="TinTooth"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
