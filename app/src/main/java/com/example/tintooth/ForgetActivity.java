@@ -21,7 +21,7 @@ public class ForgetActivity extends AppCompatActivity {
     private EditText mEmail;
     private FirebaseAuth mAuth;
     private int flag;
-    private String EMAIL_PATTERN="[a-zA-Z0-9._-]@[a-z]+\\.+[a-z]+", email;
+    private String EMAIL_PATTERN="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+", email;
 
     private void bindingView(){
         mForgetPasswordButton = findViewById(R.id.resetPasswordButton);
