@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "624798877740",
-    "firebase_url": "https://ardent-window-344411-default-rtdb.firebaseio.com",
-    "project_id": "ardent-window-344411",
-    "storage_bucket": "ardent-window-344411.appspot.com"
+    "project_number": "430275243229",
+    "firebase_url": "https://amterasu-4f7a0-default-rtdb.firebaseio.com",
+    "project_id": "amterasu-4f7a0",
+    "storage_bucket": "amterasu-4f7a0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:624798877740:android:a7e26a0009e8025ebda989",
+        "mobilesdk_app_id": "1:430275243229:android:e34e0613ddd0de30353f34",
         "android_client_info": {
           "package_name": "com.example.tintooth"
         }
       },
       "oauth_client": [
         {
-          "client_id": "624798877740-2cgh71t2usnpm32u70dvv92atjhlbl91.apps.googleusercontent.com",
+          "client_id": "430275243229-1348qdtvrivj8nrj1cjen3j6kmbt0n3g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDShH-kxq84CpXvxY1cbHYYkRZB2dERmgA"
+          "current_key": "AIzaSyDxxtF2M_hp5DSO4PiKv7qEtUg62ddCdnQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "624798877740-2cgh71t2usnpm32u70dvv92atjhlbl91.apps.googleusercontent.com",
+              "client_id": "430275243229-1348qdtvrivj8nrj1cjen3j6kmbt0n3g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
