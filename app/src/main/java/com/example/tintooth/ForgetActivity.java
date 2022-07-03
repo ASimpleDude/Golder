@@ -41,7 +41,7 @@ public class ForgetActivity extends AppCompatActivity {
 
         //check if the email id is valid or not
         if (!email.matches(EMAIL_PATTERN)){
-            Toast.makeText(ForgetActivity.this, "Enter Valid Email",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ForgetActivity.this, "Please Enter Valid Email",Toast.LENGTH_SHORT).show();
             return;
         }
 
