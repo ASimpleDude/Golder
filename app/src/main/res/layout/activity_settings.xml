@@ -107,13 +107,16 @@
                     android:padding="5dp"
                     android:textStyle="bold"
                     android:text="I can share my "/>
+
                 <Spinner
-                    android:layout_width="@dimen/fab_margin"
+                    android:id="@+id/spinner_give_setting"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="visible"
+                    android:minHeight="48dp"
                     android:spinnerMode="dialog"
-                    android:id="@+id/spinner_give_setting"/>
+                    android:visibility="visible" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
