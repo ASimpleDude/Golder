@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private ProgressBar spinner;
+    private TextView existing;
     private Button mLogin;
     private EditText mEmail, mPassword;
     private TextView mForgetPassword;
@@ -35,12 +36,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginBtnClicked = false;
         spinner = (ProgressBar) findViewById(R.id.pBar);
+        existing = (TextView) findViewById(R.id.existing);
         spinner.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         mLogin = (Button) findViewById(R.id.login);
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         mForgetPassword = (TextView) findViewById(R.id.forgetPassword);
+        existing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -30,6 +30,7 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button mRegister;
+    private TextView existing;
     private ProgressBar spinner;
     private EditText mEmail, mPassword, mName, mBudget;
     private RadioGroup mRadioGroup;
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         spinner = (ProgressBar) findViewById(R.id.pBar);
         spinner.setVisibility(View.GONE);
-        TextView existing = (TextView) findViewById(R.id.existing);
+
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -61,15 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 spinner.setVisibility(View.GONE);
             }
         };
-        existing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(i);
-                finish();
-                return;
-            }
-        });
+        existing = (TextView) findViewById(R.id.existing);
         mRegister = (Button) findViewById(R.id.register);
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
@@ -80,6 +73,14 @@ public class RegisterActivity extends AppCompatActivity {
         textview.setText(Html.fromHtml("I have read and agreed to the "+"<a href = 'https://www.blogger.com/blog/post/edit/preview/5691680832129275873/394601829011768046'> Terms and Conditions</a>"));
         textview.setClickable(true);
         textview.setMovementMethod(LinkMovementMethod.getInstance());
+        existing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     @Override
     protected void onStart() {
