@@ -2,12 +2,12 @@ package com.example.tintooth;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 
+import com.example.tintooth.Matches.MatchesActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
