@@ -23,65 +23,60 @@ public class ForgetActivity extends AppCompatActivity {
     private int flag;
     private String EMAIL_PATTERN="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+", email;
 
-    private void bindingView(){
-        mForgetPasswordButton = findViewById(R.id.resetPasswordButton);
-        mEmail = findViewById(R.id.resetPasswordEmail);
-    }
 
-    private void bindingAction(){
-        mForgetPasswordButton.setOnClickListener(this::onResetButtonClick);
-    }
-
-    private void onResetButtonClick(View view) {
-        email = mEmail.getText().toString();
-        if(email.equals("")){
-            Toast.makeText(ForgetActivity.this, "Email is empty",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //check if the email id is valid or not
-        if (!email.matches(EMAIL_PATTERN)){
-            Toast.makeText(ForgetActivity.this, "Please Enter Valid Email",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-            @Override
-            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                flag = 1;
-                mAuth.sendPasswordResetEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(ForgetActivity.this, "Password Reset instruction send to your email",Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(ForgetActivity.this, task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-        if(flag == 0){
-            Toast.makeText(ForgetActivity.this, "Email address not found",Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget);
+
         mAuth = FirebaseAuth.getInstance();
         flag = 0;
-        bindingView();
-        bindingAction();
+        mForgetPasswordButton = findViewById(R.id.resetPasswordButton);
+        mEmail = findViewById(R.id.resetPasswordEmail);
+
+        mForgetPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email = mEmail.getText().toString();
+                if (email.equals("")){
+                    Toast.makeText(ForgetActivity.this, "Enter your email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //check if email matches pattern
+                if (!email.matches(EMAIL_PATTERN)){
+                    Toast.makeText(ForgetActivity.this, "Invalid email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        flag = 1;
+                        mAuth.sendPasswordResetEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(ForgetActivity.this, "Password reset instructions is send to your email", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(ForgetActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+                if(flag == 0){
+                    Toast.makeText(ForgetActivity.this, "Email address not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
     public void onBackPressed() {
         Intent btnClick = new Intent(ForgetActivity.this, LoginActivity.class);
         startActivity(btnClick);
-        super.onBackPressed();
-        finish();
-        return;
     }
 }
