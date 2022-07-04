@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 }
 
 android {
@@ -14,6 +15,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: '48bdadf5-d749-43fe-9576-f80058ed4632',
+                onesignal_google_project_number: '430275243229'
+        ]
     }
 
     buildTypes {
@@ -34,7 +39,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     //Firebase
-//    implementation 'com.onesignal:OneSignal:3.10.1'
+    implementation 'com.onesignal:OneSignal:3.10.1'
 
     implementation 'com.google.firebase:firebase-auth:21.0.6'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
@@ -61,3 +66,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.facebook.android:facebook-login:latest.release'
 }
+
+
