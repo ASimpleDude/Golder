@@ -33,7 +33,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.tintooth.Matches.MatchesActivity;
 import com.example.tintooth.R;
-import com.example.tintooth.SendNotification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

@@ -32,12 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mRegister;
     private TextView existing;
     private ProgressBar spinner;
-    private EditText mEmail, mPassword, mName, mBudget, mPhone;
+    private EditText mEmail, mPassword, mName, mBudget;
     private RadioGroup mRadioGroup;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private String phonePattern = "[0-9]{10}";
     private static final String TAG = "RegisterActivity";
 
     @Override
@@ -68,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         mName = (EditText) findViewById(R.id.name);
-        mPhone = (EditText) findViewById(R.id.phone);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox1);
         TextView textview = (TextView) findViewById(R.id.textView2);
         checkBox.setText("");
@@ -91,8 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = mPassword.getText().toString();
                 final String name = mName.getText().toString();
                 final Boolean tnc = checkBox.isChecked();
-                final String phone = mPhone.getText().toString();
-                if(checkInputs(email, name, password, tnc, phone)){
+                if(checkInputs(email, name, password, tnc)){
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,7 +110,6 @@ public class RegisterActivity extends AppCompatActivity {
                                             mEmail.setText("");
                                             mName.setText("");
                                             mPassword.setText("");
-                                            mPhone.setText("");
                                             Intent i = new Intent(RegisterActivity.this, Choose_Login_And_Reg.class);
                                             startActivity(i);
                                             finish();
@@ -132,8 +128,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    private boolean checkInputs(String email, String username, String password, Boolean tnc, String phone){
-        if(email.equals("")||username.equals("")||password.equals("")||phone.equals("")){
+    private boolean checkInputs(String email, String username, String password, Boolean tnc){
+        if(email.equals("")||username.equals("")||password.equals("")){
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -143,10 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if(!tnc){
             Toast.makeText(this, "Please accept Terms and Conditions", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!phone.matches(phonePattern)){
-            Toast.makeText(this, "Please enter valid phone number", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
