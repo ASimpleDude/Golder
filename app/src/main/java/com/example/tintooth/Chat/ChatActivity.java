@@ -1,6 +1,7 @@
 package com.example.tintooth.Chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -31,15 +32,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tintooth.Matches.MatchesActivity;
-import com.example.tintooth.MatchesActivity;
 import com.example.tintooth.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,7 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mChatdapter;
+    private RecyclerView.Adapter mChatAdapter;
     private RecyclerView.LayoutManager mChatLayoutManager;
 
     private EditText mSendText;
@@ -58,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     private String currentUserID, matchID, chatID;
     private String matchName, matchGive, matchNeed, matchBudget, matchProfile;
     private String lastMessage, lastTimeStamp;
-    private String message, createdByUser, IsSeen, messageId, currentUserName;
+    private String message, createdByUser, isSeen, messageId, currentUserName;
     private Boolean currentUserBoolean;
 
     ValueEventListener seenListener;
@@ -85,14 +87,14 @@ public class ChatActivity extends AppCompatActivity {
 
         getChatId();
 
-        mRecyclerView = findViewById(R.id.recycleView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setFocusable(false);
         mChatLayoutManager = new LinearLayoutManager(ChatActivity.this);
         mRecyclerView.setLayoutManager(mChatLayoutManager);
-        mChatdapter = new ChatAdapter(getDataSetChat(), ChatActivity.this);
-        mRecyclerView.setAdapter(mChatdapter);
+        mChatAdapter = new ChatAdapter(getDataSetChat(), ChatActivity.this);
+        mRecyclerView.setAdapter(mChatAdapter);
 
         mSendText = findViewById(R.id.message);
         mBack = findViewById(R.id.chatBack);
@@ -163,8 +165,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    private void sendMessage(final String text) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
+    private void seenMessage(final String text) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(matchID);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -291,7 +293,7 @@ public class ChatActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.unmacth){
             new AlertDialog.Builder(ChatActivity.this)
                     .setTitle("Unmatch")
-                    .setMessage("Are you sure want to unmatch")
+                    .setMessage("Want to unmatch?")
                     .setPositiveButton("Unmatch", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -299,25 +301,191 @@ public class ChatActivity extends AppCompatActivity {
                             Intent i = new Intent(ChatActivity.this, MatchesActivity.class);
                             startActivity(i);
                             finish();
-                            Toast.makeText(ChatActivity.this, "Unmatch successful let find other", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChatActivity.this, "Unmatched successfully", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton("Dismiss",null)
-                    .setIcon(R.drawable.ic_alert);
+                    .setIcon(R.drawable.ic_alert).show();
 
         }
         else if(item.getItemId() == R.id.viewProfile){
-            showProfile(findViewById(R.id.content));
+            showProfile(findViewById(R.id.cardView));
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteMatch(String matchID) {
+        DatabaseReference matchId_in_UserId_dbReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(currentUserID).child("connections").child("matches").child(matchID);
+        DatabaseReference userId_in_matchId_dbReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(matchID).child("connections").child("matches").child(currentUserID);
+        DatabaseReference yeps_in_matchId_dbReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(matchID).child("connections").child("yeps").child(currentUserID);
+        DatabaseReference yeps_in_UserId_dbReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(currentUserID).child("connections").child("yeps").child(matchID);
+        DatabaseReference matchId_chat_dbReference = FirebaseDatabase.getInstance().getReference().child("Chat")
+                .child(chatID);
+        matchId_chat_dbReference.removeValue();
+        matchId_in_UserId_dbReference.removeValue();
+        userId_in_matchId_dbReference.removeValue();
+        yeps_in_matchId_dbReference.removeValue();
+        yeps_in_UserId_dbReference.removeValue();
+    }
+    private void sendMessage(){
+        final String sendMessageText = mSendText.getText().toString();
+        long now = System.currentTimeMillis();
+        String timeStamp = Long.toString(now);
+        if(!sendMessageText.isEmpty()){
+            DatabaseReference newMessageDb = mDatabaseChat.push();
+            Map newMessage = new HashMap();
+            newMessage.put("createdByUser", currentUserID);
+            newMessage.put("text", sendMessageText);
+            newMessage.put("timeStamp", timeStamp);
+            newMessage.put("seen", false);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        if(snapshot.child("name").exists()){
+                            currentUserName = snapshot.child("name").getValue().toString();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            lastMessage = sendMessageText;
+            lastTimeStamp = timeStamp;
+            updateLastMessage();
+            seenMessage(sendMessageText);
+            newMessageDb.setValue(newMessage);
+        }
+        mSendText.setText(null);
     }
 
-    private List<ChatObject> getDataSetChat() {
-        return null;
+    private void updateLastMessage() {
+        DatabaseReference currUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches").child(matchID);
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(matchID).child("connections").child("matches").child(currentUserID);
+        Map lastMessageMap = new HashMap();
+        lastMessageMap.put("lastMessage", lastMessage);
+        Map lastTimestampMap = new HashMap();
+        lastTimestampMap.put("lastTimeStamp", lastTimeStamp);
+        Map lastSeen = new HashMap();
+        lastSeen.put("lastSeen", "true");
+        currUserDb.updateChildren(lastSeen);
+        currUserDb.updateChildren(lastMessageMap);
+        currUserDb.updateChildren(lastTimestampMap);
+        matchDb.updateChildren(lastMessageMap);
+        matchDb.updateChildren(lastTimestampMap);
     }
 
     private void getChatId() {
+        mDatabaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    chatID = snapshot.getValue().toString();
+                    mDatabaseChat = mDatabaseChat.child(chatID);
+                    getChatMessage();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getChatMessage(){
+        mDatabaseChat.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.exists()){
+                    messageId = null;
+                    message = null;
+                    createdByUser = null;
+                    isSeen = null;
+                    if(snapshot.child("text").getValue()!=null){
+                        message = snapshot.child("text").getValue().toString();
+                    }
+                    if(snapshot.child("createdByUser").getValue()!=null){
+                        createdByUser = snapshot.child("createdByUser").getValue().toString();
+                    }
+                    if(snapshot.child("seen").getValue()!=null){
+                        isSeen = snapshot.child("seen").getValue().toString();
+                    }else{
+                        isSeen = "true";
+                    }
+                    messageId = snapshot.getKey().toString();
+                    if(messageId!= null && createdByUser!=null){
+                        currentUserBoolean = false;
+                        if(createdByUser.equals(currentUserID)){
+                            currentUserBoolean = true;
+                        }
+                        ChatObject newMessage = null;
+                        if(isSeen.equals("false")){
+                            if(!currentUserBoolean){
+                                isSeen = "true";
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Chat").child(chatID).child(messageId);
+                                Map seenInfo = new HashMap();
+                                seenInfo.put("seen", "true");
+                                reference.updateChildren(seenInfo);
+                                newMessage = new ChatObject(message, currentUserBoolean, true);
+                            }else{
+                                newMessage = new ChatObject(message, currentUserBoolean, false);
+                            }
+                        }else{
+                            newMessage = new ChatObject(message, currentUserBoolean, true);
+                        }
+                        DatabaseReference usersInChat = FirebaseDatabase.getInstance().getReference().child("Chat").child(matchID);
+                        resultsChat.add(newMessage);
+                        mChatAdapter.notifyDataSetChanged();
+                        if(mRecyclerView.getAdapter() != null && resultsChat.size() > 0){
+                            mRecyclerView.smoothScrollToPosition(resultsChat.size() - 1);
+                        }else{
+                            Toast.makeText(ChatActivity.this, "Chat empty", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private ArrayList<ChatObject> resultsChat = new ArrayList<>();
+
+    private List<ChatObject> getDataSetChat(){
+        return resultsChat;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        return;
     }
 }

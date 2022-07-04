@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tintooth.ChatActivity;
+import com.example.tintooth.Chat.ChatActivity;
 import com.example.tintooth.R;
 
 public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
