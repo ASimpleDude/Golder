@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.tintooth.Cards.arrayAdapter;
+import com.example.tintooth.Cards.cards;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +24,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.dimorinny.showcasecard.ShowCaseView;
 import ru.dimorinny.showcasecard.position.ShowCasePosition;
@@ -31,42 +34,53 @@ import ru.dimorinny.showcasecard.radius.Radius;
 public class MainActivity extends AppCompatActivity {
 
     boolean firstStart;
-    ArrayList<String> list;
-    private ArrayAdapter<String> arrayAdapter;
+    private cards card_data[];
+    private com.example.tintooth.Cards.arrayAdapter arrayAdapter;
     private int i;
+
+    private List<cards> rowItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupTopNavigationView();
-        list = new ArrayList<>();
+        rowItem = new ArrayList<cards>();
+
+
+
+//        getUserInfo();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.exists()){
-                    list.add(snapshot.child("name").getValue().toString());
+                    cards item = new cards(snapshot.getKey(), snapshot.child("name").getValue().toString());
+                    rowItem.add(item);
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.name, list );
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItem );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -76,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                list.remove(0);
+                rowItem.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -94,17 +108,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                list.add("XML ".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
+            public void onAdapterAboutToEmpty(int i) {
             }
+
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-
             }
         });
 
@@ -117,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 
