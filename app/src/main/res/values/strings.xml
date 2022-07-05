@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TinTooth</string>
+    <string name="app_name">Golder</string>
 
     <string name="facebook_app_id">1400652740401922</string>
     <string name="fb_login_protocol_scheme">fb1400652740401922</string>
@@ -16,6 +16,6 @@
     </string-array>
     <string name="fcm_message"> New Notification </string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
-    <string name="default_notification_channel_name">dafault</string>
+    <string name="default_notification_channel_name">default</string>
 
 </resources>
