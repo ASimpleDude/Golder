@@ -14,7 +14,7 @@ import com.example.tintooth.R;
 
 public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView mMatchId, mMatchName, mLastTimeStamp, mLastMessage, mNeed, mGive, mBudget, mProfile;
+    public TextView mMatchId, mMatchName, mLastTimeStamp, mLastMessage;
     public ImageView mNotificationDot;
     public ImageView mMatchImage;
 
@@ -25,11 +25,7 @@ public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.
         mMatchName = (TextView) itemView.findViewById(R.id.MatchName);
         mLastMessage = (TextView) itemView.findViewById(R.id.lastMessage);
         mLastTimeStamp = (TextView) itemView.findViewById(R.id.lastTimeStamp);
-        mNeed = (TextView) itemView.findViewById(R.id.needid);
-        mGive = (TextView) itemView.findViewById(R.id.giveid);
-        mBudget = (TextView) itemView.findViewById(R.id.budgetid);
         mMatchImage = (ImageView) itemView.findViewById(R.id.MatchImage);
-        mProfile = (TextView) itemView.findViewById(R.id.profileid);
         mNotificationDot = (ImageView) itemView.findViewById(R.id.notification_dot);
     }
 
@@ -41,10 +37,6 @@ public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.
         b.putString("matchName", mMatchName.getText().toString());
         b.putString("lastMessage", mLastMessage.getText().toString());
         b.putString("lastTimeStamp", mLastTimeStamp.getText().toString());
-        b.putString("budget", mBudget.getText().toString());
-        b.putString("need", mNeed.getText().toString());
-        b.putString("give", mGive.getText().toString());
-        b.putString("profile", mProfile.getText().toString());
         intent.putExtras(b);
         v.getContext().startActivity(intent);
     }

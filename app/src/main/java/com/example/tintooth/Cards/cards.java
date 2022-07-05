@@ -8,6 +8,9 @@ public class cards {
     private String give;
     private String budget;
 
+    public cards(String userId){
+        this.userId = userId;
+    }
 
     public cards(String userId, String name) {
         this.userId = userId;
