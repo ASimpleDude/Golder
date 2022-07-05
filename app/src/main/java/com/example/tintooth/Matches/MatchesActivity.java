@@ -41,26 +41,31 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-//        mBack = findViewById(R.id.matchesBack);
-//        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-//        mRecyclerView.setNestedScrollingEnabled(false);
-//        mRecyclerView.setHasFixedSize(true);
-//        mMatchesLayoutManager = new LinearLayoutManager(MatchesActivity.this);
-//        mRecyclerView.setLayoutManager(mMatchesLayoutManager);
-//        mMatchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
-//        mRecyclerView.setAdapter(mMatchesAdapter);
-//        mBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//                return;
-//            }
-//        });
+        mBack = findViewById(R.id.matchesBack);
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setHasFixedSize(true);
+        mMatchesLayoutManager = new LinearLayoutManager(MatchesActivity.this);
+        mRecyclerView.setLayoutManager(mMatchesLayoutManager);
+        mMatchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
+        mRecyclerView.setAdapter(mMatchesAdapter);
+       MatchesObject obj = new MatchesObject("QuanNC","QuanNC","QuanNC","ok","yeu","5","6","6","12","22");
+        MatchesObject obj1 = new MatchesObject("QuanNC","QuanNC","QuanNC","ok","yeu","5","6","6","12","22");
+       resultsMatches.add(obj);
+        resultsMatches.add(obj1);
+
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
 //        getUserMatchId();
-//        mLastMessage = mLastTimeStamp = lastSeen = "";
+        mLastMessage = mLastTimeStamp = lastSeen = "";
     }
 
     @Override
