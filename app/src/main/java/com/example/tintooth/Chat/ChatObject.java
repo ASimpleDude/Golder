@@ -2,13 +2,18 @@ package com.example.tintooth.Chat;
 
 public class ChatObject {
     private String message;
-    private Boolean currentUser;
+    private Boolean currentUser;//userID
     private Boolean isSeen;
 
     public ChatObject(String message, Boolean currentUser, Boolean isSeen) {
         this.message = message;
         this.currentUser = currentUser;
         this.isSeen = isSeen;
+    }
+
+    public ChatObject(String message, Boolean currentUser) {
+        this.message = message;
+        this.currentUser = currentUser;
     }
 
     public String getMessage() {
