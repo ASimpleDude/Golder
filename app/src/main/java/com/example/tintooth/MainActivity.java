@@ -11,15 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tintooth.Cards.arrayAdapter;
 import com.example.tintooth.Cards.cards;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private cards card_data[];
     private com.example.tintooth.Cards.arrayAdapter arrayAdapter;
     private int i;
+    private ProgressBar pBar ;
+    private TextView noOne;
+    private DatabaseReference usersDb;
+    private String currentUId;
 
     private List<cards> rowItem;
     @Override
@@ -45,17 +53,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupTopNavigationView();
         rowItem = new ArrayList<cards>();
-
-
-
+        pBar = findViewById(R.id.pBar);
+        pBar.setVisibility(View.VISIBLE);
+        noOne = findViewById(R.id.noOne);
+        noOne.setVisibility(View.GONE);
+        usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
+        currentUId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //        getUserInfo();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists()){
+                if(snapshot.exists() && !snapshot.child("connections").child("nope").hasChild(currentUId) && !snapshot.child("connections").child("yeps").hasChild(currentUId)){
+                    pBar.setVisibility(View.GONE);
                     cards item = new cards(snapshot.getKey(), snapshot.child("name").getValue().toString());
                     rowItem.add(item);
+                    if(item.getUserId().equals(currentUId)){
+                        rowItem.remove(item);
+                    }
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
@@ -99,16 +114,24 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+                cards card = (cards) dataObject;
+                String userId = card.getUserId();
+                usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
+                Toast.makeText(MainActivity.this, card.getName()+" Nope", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+                cards card = (cards) dataObject;
+                String userId = card.getUserId();
+                usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
+                isConnectionMatch(userId);
+                Toast.makeText(MainActivity.this, card.getName()+" Yeps", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdapterAboutToEmpty(int i) {
+
             }
 
 
@@ -127,7 +150,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void isConnectionMatch(String userId){
+        DatabaseReference currentUserConnectionsDb = usersDb.child(currentUId).child("connections").child("yeps").child(userId);
+        currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Toast.makeText(MainActivity.this, "You have found a match!", Toast.LENGTH_LONG).show();
+                    usersDb.child(snapshot.getKey()).child("connections").child("matches").child(currentUId).setValue(true);
+                    usersDb.child(currentUId).child("connections").child("matches").child(snapshot.getKey()).setValue(true);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void setupTopNavigationView(){
         BottomNavigationViewEx tvEx = findViewById(R.id.topNavViewBar);

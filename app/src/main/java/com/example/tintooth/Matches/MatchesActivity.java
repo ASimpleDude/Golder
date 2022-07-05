@@ -41,26 +41,26 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-        mBack = findViewById(R.id.matchesBack);
-        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setHasFixedSize(true);
-        mMatchesLayoutManager = new LinearLayoutManager(MatchesActivity.this);
-        mRecyclerView.setLayoutManager(mMatchesLayoutManager);
-        mMatchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
-        mRecyclerView.setAdapter(mMatchesAdapter);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        });
-        getUserMatchId();
-        mLastMessage = mLastTimeStamp = lastSeen = "";
+//        mBack = findViewById(R.id.matchesBack);
+//        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+//        mRecyclerView.setNestedScrollingEnabled(false);
+//        mRecyclerView.setHasFixedSize(true);
+//        mMatchesLayoutManager = new LinearLayoutManager(MatchesActivity.this);
+//        mRecyclerView.setLayoutManager(mMatchesLayoutManager);
+//        mMatchesAdapter = new MatchesAdapter(getDataSetMatches(), MatchesActivity.this);
+//        mRecyclerView.setAdapter(mMatchesAdapter);
+//        mBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//                return;
+//            }
+//        });
+//        getUserMatchId();
+//        mLastMessage = mLastTimeStamp = lastSeen = "";
     }
 
     @Override
@@ -91,83 +91,83 @@ public class MatchesActivity extends AppCompatActivity {
             }
         });
     }
-    private void getUserMatchId(){
-        Query sortedMatchesMyLastTimeStamp = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("connections").child("matches").orderByChild("lastTimeStamp");
-        sortedMatchesMyLastTimeStamp.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot match: snapshot.getChildren()){
-                        FetchMatchInformation(match.getKey(), match.child("Chatid").toString());
-                    }
-                }
-            }
+//    private void getUserMatchId(){
+//        Query sortedMatchesMyLastTimeStamp = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("connections").child("matches").orderByChild("lastTimeStamp");
+//        sortedMatchesMyLastTimeStamp.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    for(DataSnapshot match: snapshot.getChildren()){
+//                        FetchMatchInformation(match.getKey(), match.child("Chatid").toString());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void FetchMatchInformation(final String key, final String chatid) {
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
-        getLastMessageInfo(userDb);
-        userDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String userId = snapshot.getKey();
-                    String name = "";
-                    String profileImageUrl = "";
-                    String need = "";
-                    String give = "";
-                    String budget = "";
-                    final String lastMessage = "";
-                    String lastTimeStamp = "";
-                    if(snapshot.child("name").getValue()!=null){
-                        name = snapshot.child("name").getValue().toString();
-                    }
-                    if(snapshot.child("profileImageUrl").getValue()!=null){
-                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
-                    }
-                    if(snapshot.child("need").getValue()!=null){
-                        need = snapshot.child("need").getValue().toString();
-                    }
-                    if(snapshot.child("give").getValue()!=null){
-                        give = snapshot.child("give").getValue().toString();
-                    }
-                    if(snapshot.child("budget").getValue().toString()!=null){
-                        budget = snapshot.child("budget").getValue().toString();
-                    }
-                    String milliSec = mLastTimeStamp;
-                    Long now;
-                    try{
-                        now = Long.parseLong(milliSec);
-                        lastTimeStamp = convertMilliToRelative(now);
-                        String[] arrOfStr = lastTimeStamp.split(",");
-                        mLastTimeStamp = arrOfStr[0];
-                    }catch (Exception e){
-
-                    }
-                    MatchesObject obj = new MatchesObject(userId, name, profileImageUrl, need, give, budget, mLastMessage, mLastTimeStamp, chatid, lastMessage);
-                    if(mList.containsKey(chatid)){
-                        int key = mList.get(chatid);
-                        resultsMatches.set(resultsMatches.size() - key, obj);
-                    }else{
-                        resultsMatches.add(0, obj);
-                        mList.put(chatid, resultsMatches.size());
-                    }
-                    mMatchesAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    private void FetchMatchInformation(final String key, final String chatid) {
+//        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
+//        getLastMessageInfo(userDb);
+//        userDb.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    String userId = snapshot.getKey();
+//                    String name = "";
+//                    String profileImageUrl = "";
+//                    String need = "";
+//                    String give = "";
+//                    String budget = "";
+//                    final String lastMessage = "";
+//                    String lastTimeStamp = "";
+//                    if(snapshot.child("name").getValue()!=null){
+//                        name = snapshot.child("name").getValue().toString();
+//                    }
+//                    if(snapshot.child("profileImageUrl").getValue()!=null){
+//                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+//                    }
+//                    if(snapshot.child("need").getValue()!=null){
+//                        need = snapshot.child("need").getValue().toString();
+//                    }
+//                    if(snapshot.child("give").getValue()!=null){
+//                        give = snapshot.child("give").getValue().toString();
+//                    }
+//                    if(snapshot.child("budget").getValue().toString()!=null){
+//                        budget = snapshot.child("budget").getValue().toString();
+//                    }
+//                    String milliSec = mLastTimeStamp;
+//                    Long now;
+//                    try{
+//                        now = Long.parseLong(milliSec);
+//                        lastTimeStamp = convertMilliToRelative(now);
+//                        String[] arrOfStr = lastTimeStamp.split(",");
+//                        mLastTimeStamp = arrOfStr[0];
+//                    }catch (Exception e){
+//
+//                    }
+//                    MatchesObject obj = new MatchesObject(userId, name, profileImageUrl, need, give, budget, mLastMessage, mLastTimeStamp, chatid, lastMessage);
+//                    if(mList.containsKey(chatid)){
+//                        int key = mList.get(chatid);
+//                        resultsMatches.set(resultsMatches.size() - key, obj);
+//                    }else{
+//                        resultsMatches.add(0, obj);
+//                        mList.put(chatid, resultsMatches.size());
+//                    }
+//                    mMatchesAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private String convertMilliToRelative(Long now) {
         String time = DateUtils.getRelativeDateTimeString(this, now, DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
