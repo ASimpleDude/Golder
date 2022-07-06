@@ -81,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users")
-                .child(currentUserID).child("connections").child("matches").child(matchID).child("ChatId");
+                .child(currentUserID).child("connections").child("matches").child(matchID).child("chatId");
 
         mDatabaseChat = FirebaseDatabase.getInstance().getReference().child("Chat");
 
@@ -104,20 +104,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
-            }
-        });
-
-        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (bottom < oldBottom){
-                    mRecyclerView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
-                        }
-                    }, 100);
-                }
             }
         });
 
@@ -178,7 +164,7 @@ public class ChatActivity extends AppCompatActivity {
                     if(snapshot.child("text").getValue()!=null){
                         message = snapshot.child("text").getValue().toString();
                     }
-                    if(snapshot.child("created").getValue()!=null){
+                    if(snapshot.child("createdByUser").getValue()!=null){
                         createdByUser = snapshot.child("createdByUser").getValue().toString();
                     }
                     if(message!=null && createdByUser!=null){

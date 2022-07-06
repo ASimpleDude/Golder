@@ -156,9 +156,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
+                    String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+
                     Toast.makeText(MainActivity.this, "You have found a match!", Toast.LENGTH_LONG).show();
-                    usersDb.child(snapshot.getKey()).child("connections").child("matches").child(currentUId).setValue(true);
-                    usersDb.child(currentUId).child("connections").child("matches").child(snapshot.getKey()).setValue(true);
+
+                    usersDb.child(snapshot.getKey()).child("connections").child("matches").child(currentUId).child("chatId").setValue(key);
+
+                    usersDb.child(currentUId).child("connections").child("matches").child(snapshot.getKey()).child("chatId").setValue(key);
                 }
             }
 
