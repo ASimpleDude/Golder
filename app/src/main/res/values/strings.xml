@@ -6,13 +6,9 @@
     <string name="facebook_client_token">5ad98ec5dca100e650496f9af37ecc58</string>
     <string name="logout">LOGOUT</string>
     <string-array name="services">
-        <item>Netflix</item>
-        <item>Amazon Prime</item>
-        <item>Hulu</item>
-        <item>Vudu</item>
-        <item>HBO Now</item>
-        <item>Youtube Originals</item>
-        <item>None</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Others</item>
     </string-array>
     <string name="fcm_message"> New Notification </string>
     <string name="default_notification_channel_id">fcm_default_channel</string>

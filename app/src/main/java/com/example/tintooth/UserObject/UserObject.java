@@ -1,41 +1,32 @@
 package com.example.tintooth.UserObject;
-
 import java.io.Serializable;
-
 public class UserObject implements Serializable {
-    private String uid, name, phone, notificationKey;
+    private String uid, name, phone,gender, description, notificationKey;
     private Boolean selected = false;
     private UserObject(String uid){
         this.uid = uid;
     }
-
-    public UserObject(String name, String phone, String notificationKey) {
+    public UserObject(String name, String phone,String gender,String description ,String notificationKey) {
         this.name = name;
         this.phone = phone;
+        this.gender=gender;
+        this.description=description;
         this.notificationKey = notificationKey;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getGender() {
+        return gender;
     }
-
-    public String getPhone() {
-        return phone;
+    public void setGender(String sex) {
+        this.gender = gender;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getDescription() {
+        return description;
     }
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public String getNotificationKey() {
         return notificationKey;
-    }
-
-    public void setNotificationKey(String notificationKey) {
-        this.notificationKey = notificationKey;
-    }
-}
+    }}

@@ -53,16 +53,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
-    private EditText mNameField, mPhoneField, mBudget;
+    private EditText mNameField, mPhoneField, mDesField;
     private ProgressBar spinner;
     private Button mConfirm;
     private ImageButton mBack;
     private ImageView mProfileImage;
-    private Spinner need,give;
+    private Spinner mGender;
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
-    private String userId, name, phone, profileImageUrl, userSex, userBudget, userNeed, userGive;
-    private int needIndex, giveIndex;
+    private String userId, userName, userPhone, profileImageUrl, userGender, userDescription;
+    private int genderIndex;
     private Uri resultUri;
     private Toolbar toolbar;
     @Override
@@ -75,39 +75,41 @@ public class SettingsActivity extends AppCompatActivity {
 
         mNameField = (EditText) findViewById(R.id.name);
         mPhoneField = (EditText) findViewById(R.id.phone);
+        mDesField= (EditText) findViewById(R.id.description_setting) ;
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
         mBack = findViewById(R.id.settingsBack);
 
         mConfirm = (Button) findViewById(R.id.confirm);
-        mBudget = (EditText) findViewById(R.id.budget_settings);
-        need = (Spinner) findViewById(R.id.spinner_need_settings);
-        give = (Spinner) findViewById(R.id.spinner_give_setting);
+        mGender = (Spinner) findViewById(R.id.spinner_gender_settings);
+
+        androidx.appcompat.widget.Toolbar toolbar= findViewById(R.id.settings_toolbartag);
+        setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
         if (mAuth != null && mAuth.getCurrentUser() != null)
             userId = mAuth.getCurrentUser().getUid();
+
         else {
+            Toast.makeText(this, "Not login", Toast.LENGTH_SHORT).show();
             finish();
         }
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
-
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        Toast.makeText(this, "User"+userId, Toast.LENGTH_SHORT).show();
+        getUserInfo();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.services,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        need.setAdapter(adapter);
+        mGender.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> adapter_give = ArrayAdapter.createFromResource(this, R.array.services,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        give.setAdapter(adapter_give);
 
-        getUserInfo();
+
         mProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //xin lai quyen truy cap
                 if(!checkPermission()){
                     Toast.makeText(SettingsActivity.this, "Allow access to continue!", Toast.LENGTH_SHORT).show();
                     requestPermission();
@@ -122,22 +124,23 @@ public class SettingsActivity extends AppCompatActivity {
         mConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+                saveUserInformation();
+//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+//                startActivity(intent);
+//
+//                finish();
+//                return;
             }
         });
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 spinner.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 finish();return;
             }
         });
-        androidx.appcompat.widget.Toolbar toolbar= findViewById(R.id.settings_toolbartag);
-        setSupportActionBar(toolbar);
+
 
     }
     @Override
@@ -242,6 +245,7 @@ public class SettingsActivity extends AppCompatActivity {
         yeps_in_matchId_dbReference.removeValue();
         yeps_in_UserId_dbReference.removeValue();
     }
+
     private void deleteUserAccount(String userId) {
         DatabaseReference curruser_ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         DatabaseReference curruser_matches_ref = FirebaseDatabase.getInstance().getReference()
@@ -271,35 +275,30 @@ public class SettingsActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()&&dataSnapshot.getChildrenCount()>0){
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
                     if(map.get("name")!=null){
-                        name=map.get("name").toString();
-                        mNameField.setText(name);
+                        userName=map.get("name").toString();
+                        mNameField.setText(userName);
                     }
                     if(map.get("phone")!=null){
-                        name=map.get("phone").toString();
-                        mPhoneField.setText(phone);
-                    }if(map.get("sex")!=null){
-                        userSex=map.get("sex").toString();
-                    }
-                    if(map.get("budget")!=null){
-                        userBudget=map.get("budget").toString();
-                    }else
-                        userBudget="0";
-                    if(map.get("give")!=null){
-                        userGive=map.get("give").toString();
-                    }else userGive="";
-                        if (map.get("need") != null) {
-                            userNeed=map.get("need").toString();
+                        userPhone=map.get("phone").toString();
+                        mPhoneField.setText(userPhone);
+                    }if(map.get("gender")!=null){
+                        userGender=map.get("gender").toString();
+                        //add set spinner here
 
-                        }else userNeed="";
+                    }
+                    if(map.get("description")!=null){
+                        userDescription=map.get("description").toString();
+                        mDesField.setText(userDescription);
+                    }
+
+
+
                         String[] services = getResources().getStringArray(R.array.services);
-                        needIndex=giveIndex=0;
+                        genderIndex=0;
                         for (int i=0;i<services.length;i++){
-                            if(userNeed.equals(services[i])) needIndex=1;
-                            if(userGive.equals(services[i])) giveIndex=1;
+                            if(userGender.equals(services[i])) genderIndex=i;
                         }
-                        need.setSelection(needIndex);
-                        give.setSelection(giveIndex);
-                        mBudget.setText(userBudget);
+                        mGender.setSelection(genderIndex);
 
                         Glide.clear(mProfileImage);
                         if(map.get("profileImageUrl")!=null){
@@ -320,22 +319,20 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(SettingsActivity.this, "Fail upload image", Toast.LENGTH_SHORT).show();
             }
         });}
         private void saveUserInformation(){
-            name= mNameField.getText().toString();
-            phone=mPhoneField.getText().toString();
-            userBudget=mBudget.getText().toString();
-            userGive=give.getSelectedItem().toString();
-            userNeed=need.getSelectedItem().toString();
+            userName= mNameField.getText().toString();
+            userPhone=mPhoneField.getText().toString();
+            userGender=mGender.getSelectedItem().toString();
+            userDescription=mDesField.getText().toString();
 
             Map userInfo = new HashMap();
-            userInfo.put("name", name);
-            userInfo.put("phone", phone);
-            userInfo.put("need", need);
-            userInfo.put("give", give);
-            userInfo.put("budget", userBudget);
+            userInfo.put("name", userName);
+            userInfo.put("phone", userPhone);
+            userInfo.put("gender", userGender);
+            userInfo.put("description", userDescription);
             mUserDatabase.updateChildren(userInfo);
             if(resultUri!=null){
                 StorageReference filepath= FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
