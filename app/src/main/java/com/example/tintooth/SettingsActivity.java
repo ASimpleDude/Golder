@@ -177,7 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.Contact){
             new AlertDialog.Builder(SettingsActivity.this)
                     .setTitle("Contact Us")
-                    .setMessage("Contact Us: ABCD")
+                    .setMessage("hong pé ưi")
                     .setNegativeButton("Dismiss", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -185,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
         else if(item.getItemId()==R.id.logout){
             spinner.setVisibility(View.VISIBLE);
             mAuth.signOut();
-            Toast.makeText(this, "Log out successfull", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Log out successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SettingsActivity.this, Choose_Login_And_Reg.class);
             startActivity(intent);
             finish();
@@ -194,7 +194,8 @@ public class SettingsActivity extends AppCompatActivity {
         else if(item.getItemId()==R.id.deleteAccount){
             new AlertDialog.Builder(SettingsActivity.this)
                     .setTitle("Are you sure?")
-                    .setMessage("Delete account will also remove all your data from system")
+                    .setMessage("Delete account will also remove all your data from system." +
+                            "Trap boy and trap girl usually use this function :(")
                     .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -293,12 +294,12 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-                        String[] services = getResources().getStringArray(R.array.services);
-                        genderIndex=0;
-                        for (int i=0;i<services.length;i++){
-                            if(userGender.equals(services[i])) genderIndex=i;
-                        }
-                        mGender.setSelection(genderIndex);
+//                        String[] services = getResources().getStringArray(R.array.services);
+//                        genderIndex=0;
+//                        for (int i=0;i<services.length;i++){
+//                            if(userGender.equals(services[i])) genderIndex=1;
+//                        }
+//                        mGender.setSelection(genderIndex);
 
                         Glide.clear(mProfileImage);
                         if(map.get("profileImageUrl")!=null){
