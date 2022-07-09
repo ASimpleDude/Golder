@@ -2,6 +2,10 @@ package com.example.tintooth;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,6 +69,22 @@ public class SettingsActivity extends AppCompatActivity {
     private int genderIndex;
     private Uri resultUri;
     private Toolbar toolbar;
+    private ActivityResultLauncher<Intent> mActivityResultLauncher
+            = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+        if (result.getResultCode()==RESULT_OK){
+            Intent intent = result.getData();
+            if (intent==null) return;
+            Uri uri = intent.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
         mProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //xin lai quyen truy cap
+
                 if(!checkPermission()){
                     Toast.makeText(SettingsActivity.this, "Allow access to continue!", Toast.LENGTH_SHORT).show();
                     requestPermission();
@@ -162,9 +182,10 @@ public class SettingsActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Intent intent = new Intent();
                 intent.setType("image/*");
-                startActivityForResult(intent, 1);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                mActivityResultLauncher.launch(Intent.createChooser(intent, "select picture"));
             } else {
                 Toast.makeText(this, "Allow access to continue", Toast.LENGTH_SHORT).show();
             }
@@ -294,12 +315,9 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-//                        String[] services = getResources().getStringArray(R.array.services);
-//                        genderIndex=0;
-//                        for (int i=0;i<services.length;i++){
-//                            if(userGender.equals(services[i])) genderIndex=1;
-//                        }
-//                        mGender.setSelection(genderIndex);
+                        if (userGender.toString().equals("Male") ) mGender.setSelection(0);
+                    if (userGender.toString().equals("Female") ) mGender.setSelection(1);
+                    if (userGender.toString().equals("Others") ) mGender.setSelection(2);
 
                         Glide.clear(mProfileImage);
                         if(map.get("profileImageUrl")!=null){
