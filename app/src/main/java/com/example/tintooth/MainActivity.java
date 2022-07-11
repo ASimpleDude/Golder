@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.exists() && !snapshot.child("connections").child("nope").hasChild(currentUId) && !snapshot.child("connections").child("yeps").hasChild(currentUId)){
                     pBar.setVisibility(View.GONE);
-                    cards item = new cards(snapshot.getKey(), snapshot.child("name").getValue().toString());
+                    cards item = new cards(snapshot.getKey(), snapshot.child("name").getValue().toString(), snapshot.child("profileImageUrl").getValue().toString(), snapshot.child("gender").getValue().toString(), snapshot.child("description").getValue().toString(), snapshot.child("phone").getValue().toString());
                     rowItem.add(item);
                     if(item.getUserId().equals(currentUId)){
                         rowItem.remove(item);

@@ -31,23 +31,11 @@ public class arrayAdapter extends ArrayAdapter<cards> {
         TextView name = (TextView) convertView.findViewById(R.id.name);
         name.setText(card_item.getName());
         TextView gender = (TextView) convertView.findViewById(R.id.gender_display);
-        if(card_item.getGender()==null){
-            gender.setText("Others");
-        }else{
-            gender.setText(card_item.getGender());
-        }
+        gender.setText(card_item.getGender());
         TextView description = (TextView) convertView.findViewById(R.id.description_display);
-        if(card_item.getDescription()==null){
-            description.setText("");
-        }else{
-            description.setText(card_item.getDescription());
-        }
+        description.setText(card_item.getDescription());
         TextView phone = (TextView) convertView.findViewById(R.id.phone_display);
-        if(card_item.getPhone()==null){
-            phone.setText("");
-        }else{
-            phone.setText(card_item.getPhone());
-        }
+        phone.setText(card_item.getPhone());
         return convertView;
     }
 }
