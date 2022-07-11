@@ -21,7 +21,7 @@ public class ForgetActivity extends AppCompatActivity {
     private EditText mEmail;
     private FirebaseAuth mAuth;
     private int flag;
-    private String EMAIL_PATTERN="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", email;
+    private String EMAIL_PATTERN="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+", email;
 
 
 

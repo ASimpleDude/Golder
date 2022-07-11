@@ -41,8 +41,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="BEST DATING APP EVER"
-                        android:textColor="@color/yellow"
+                        android:text="Dating app"
+                        android:textColor="@color/white"
                         android:textSize="23dp"
                         android:textStyle="bold" />
 
@@ -52,10 +52,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="150dp"
                         android:layout_marginBottom="2dp"
-                        android:background="@color/blue_500"
+                        android:background="@color/red"
                         android:padding="12dp"
                         android:text="LOG IN"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -64,11 +64,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="25dp"
-                        android:background="@color/blue_500"
+                        android:background="@color/red"
                         android:gravity="center"
                         android:padding="12dp"
                         android:text="SIGN UP"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <ProgressBar

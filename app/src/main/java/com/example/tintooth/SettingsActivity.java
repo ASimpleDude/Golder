@@ -117,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         Toast.makeText(this, "User"+userId, Toast.LENGTH_SHORT).show();
         getUserInfo();
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genders,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.services,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
