@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="#e7509c"
             android:orientation="vertical"
             android:paddingLeft="25dp"
             android:paddingTop="55dp"
@@ -33,7 +33,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="100dp"
                     android:gravity="bottom"
-                    android:background="@color/white">
+                    android:background="#e7509c">
                     <EditText
                         android:id="@+id/resetPasswordEmail"
                         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_marginBottom="25dp"
-                    android:background="@color/tinder"
+                    android:background="@color/red"
                     android:padding="12dp"
                     android:text="Reset Password"
                     android:textColor="@color/white"

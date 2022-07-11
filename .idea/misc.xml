@@ -23,12 +23,14 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/TinTooth/app/src/main/res/menu/chat_menu.xml" value="0.3625" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/TinTooth/app/src/main/res/menu/settings_menu.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/drawable/ic_back_arrow.xml" value="0.145" />
+        <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/drawable/rectangle.xml" value="0.2105" />
+        <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/drawable/rounded_corner_layout.xml" value="0.2105" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_btn_dis_like.xml" value="0.1037037037037037" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_btn_like.xml" value="0.14074074074074075" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_choose_login_and_reg.xml" value="0.264" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_forget.xml" value="0.25" />
-        <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_main2.xml" value="0.25" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/activity_matches.xml" value="0.264" />
@@ -42,6 +44,7 @@
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/layout_top_navigation_back.xml" value="0.2" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/layout_top_navigation_view.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/login.xml" value="0.25" />
+        <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/splash_screen.xml" value="0.25" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/swipecard.xml" value="0.1" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/toolbar.xml" value="0.1" />
         <entry key="..\:/Users/asus/Documents/GitHub/TinTooth/app/src/main/res/layout/toolbar_matches.xml" value="0.11481481481481481" />

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#7D37F8"
+    android:background="#e7509c"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="0dp"
-            android:background="@drawable/ic_back_arrow"/>
+            android:background="@drawable/ic_backarrow_white"/>
         <TextView
             android:id="@+id/matches_toolbartag"
             android:layout_width="wrap_content"

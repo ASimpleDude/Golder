@@ -15,7 +15,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="#e7509c"
                 android:orientation="vertical"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -26,16 +26,16 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="218dp"
-                        android:layout_height="160dp"
+                        android:layout_width="203dp"
+                        android:layout_height="177dp"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/golder_logo"/>
+                        android:background="@drawable/amaterasu" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Registration Form"
-                        android:textColor="@color/red"
+                        android:text="Registration"
+                        android:textColor="@color/white"
                         android:textSize="23dp"
                         android:textStyle="bold"
                         android:layout_gravity="center_horizontal"/>
@@ -44,7 +44,7 @@
                         android:layout_height="70dp"
                         android:layout_marginTop="70dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/white"
+                        android:background="#e7509c"
                         android:gravity="bottom">
                         <EditText
                             android:id="@+id/email"
@@ -60,7 +60,7 @@
                         android:layout_height="70dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/white"
+                        android:background="#e7509c"
                         android:gravity="bottom">
                         <EditText
                             android:id="@+id/name"
@@ -76,7 +76,7 @@
                         android:layout_height="70dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/white"
+                        android:background="#e7509c"
                         android:gravity="bottom">
                         <EditText
                             android:id="@+id/password"
@@ -92,7 +92,7 @@
                         android:layout_height="70dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/white"
+                        android:background="#e7509c"
                         android:gravity="bottom">
                         <EditText
                             android:id="@+id/phone_number"
@@ -112,12 +112,14 @@
                             android:id="@+id/checkbox1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:text="CheckBox"/>
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TextView"
+                            android:textColor="@color/white"
                             android:clickable="true"/>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatButton
@@ -137,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/existing"
                     android:padding="15dp"
+                    android:textColor="@color/white"
                     android:text="Already have account? Login here"
                     android:layout_gravity="center_horizontal"/>
 
