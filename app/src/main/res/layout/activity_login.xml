@@ -36,10 +36,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Login"
+                        android:text="Welcome to Amaterasu"
                         android:textSize="23dp"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
+                        android:textColor="@color/yellow"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"/>
                     <com.google.android.material.textfield.TextInputLayout
@@ -56,6 +56,11 @@
                             android:hint="Email"
                             android:inputType="textEmailAddress"
                             android:padding="20dp"
+<<<<<<< Updated upstream
+=======
+                            android:textColor="#e7509c"
+
+>>>>>>> Stashed changes
                             android:textColorHint="@color/tinder"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
@@ -71,19 +76,24 @@
                             android:hint="Password"
                             android:inputType="textPassword"
                             android:padding="20dp"
+<<<<<<< Updated upstream
+=======
+                            android:textColor="#e7509c"
+>>>>>>> Stashed changes
                             android:textColorHint="@color/tinder" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:layout_marginBottom="25dp"
-                        android:background="@color/red"
+                        android:background="@color/blue_500"
                         android:padding="12dp"
                         android:text="LOG IN"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"/>
+                        android:textColor="#FFFDE7"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/forgetPassword"
                         android:layout_width="match_parent"
@@ -91,7 +101,7 @@
                         android:layout_marginBottom="25dp"
                         android:gravity="center"
                         android:text="Forgot Password"
-                        android:textColor="@color/white"
+                        android:textColor="@color/yellow"
                         android:textSize="16sp"/>
 
                     <TextView
@@ -100,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:padding="15dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/yellow"
                         android:text="Don't have Account? Register here" />
                 </LinearLayout>
             </LinearLayout>

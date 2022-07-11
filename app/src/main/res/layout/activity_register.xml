@@ -20,6 +20,7 @@
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:paddingTop="55dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -34,11 +35,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Registration"
-                        android:textColor="@color/white"
+                        android:layout_gravity="center_horizontal"
+                        android:text="First step to join with us"
+                        android:textColor="@color/yellow"
                         android:textSize="23dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"/>
+                        android:textStyle="bold" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
@@ -46,6 +48,7 @@
                         android:layout_marginBottom="5dp"
                         android:background="#e7509c"
                         android:gravity="bottom">
+
                         <EditText
                             android:id="@+id/email"
                             android:layout_width="match_parent"
@@ -53,8 +56,9 @@
                             android:background="@drawable/edit_text_focused_bg"
                             android:hint="Enter your email"
                             android:inputType="textEmailAddress"
-                            android:padding="20dp"/>
+                            android:padding="20dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
@@ -62,6 +66,7 @@
                         android:layout_marginBottom="5dp"
                         android:background="#e7509c"
                         android:gravity="bottom">
+
                         <EditText
                             android:id="@+id/name"
                             android:layout_width="match_parent"
@@ -69,8 +74,9 @@
                             android:background="@drawable/edit_text_focused_bg"
                             android:hint="Enter your name"
                             android:inputType="textPersonName"
-                            android:padding="20dp"/>
+                            android:padding="20dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
@@ -78,6 +84,7 @@
                         android:layout_marginBottom="5dp"
                         android:background="#e7509c"
                         android:gravity="bottom">
+
                         <EditText
                             android:id="@+id/password"
                             android:layout_width="match_parent"
@@ -85,8 +92,9 @@
                             android:background="@drawable/edit_text_focused_bg"
                             android:hint="Enter your password"
                             android:inputType="textPassword"
-                            android:padding="20dp"/>
+                            android:padding="20dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
@@ -94,52 +102,58 @@
                         android:layout_marginBottom="5dp"
                         android:background="#e7509c"
                         android:gravity="bottom">
+
                         <EditText
                             android:id="@+id/phone_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_focused_bg"
+                            android:ems="10"
                             android:hint="Enter your phone number"
                             android:inputType="number"
-                            android:padding="20dp"
-                            android:ems="10"/>
+                            android:padding="20dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <CheckBox
                             android:id="@+id/checkbox1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:text="CheckBox"/>
+                            android:text="CheckBox"
+                            android:textColor="@color/yellow" />
+
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:text="TextView"
-                            android:textColor="@color/white"
-                            android:clickable="true"/>
+                            android:textColor="@color/white" />
                     </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/register"
+                        style="@android:style/Widget.Material.Button.Borderless.Colored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@android:style/Widget.Material.Button.Borderless.Colored"
                         android:layout_marginTop="25dp"
                         android:layout_marginBottom="25dp"
-                        android:background="@color/red"
+                        android:background="@color/blue_500"
                         android:padding="12dp"
                         android:text="Register"
-                        android:textColor="@color/white"/>
+                        android:textColor="#FFFDE7" />
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/existing"
                     android:padding="15dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
                     android:text="Already have account? Login here"
                     android:layout_gravity="center_horizontal"/>
 
