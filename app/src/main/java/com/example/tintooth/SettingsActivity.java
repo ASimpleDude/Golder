@@ -312,13 +312,13 @@ public class SettingsActivity extends AppCompatActivity {
                         userDescription=map.get("description").toString();
                         mDesField.setText(userDescription);
                     }
-
-
-
-                        if (userGender.toString().equals("Male") ) mGender.setSelection(0);
-                    if (userGender.toString().equals("Female") ) mGender.setSelection(1);
-                    if (userGender.toString().equals("Others") ) mGender.setSelection(2);
-
+                    if (userGender.toString().equals("Male")){
+                        mGender.setSelection(0);
+                    } else if (userGender.toString().equals("Female")){
+                        mGender.setSelection(1);
+                    } else {
+                        mGender.setSelection(2);
+                    }
                         Glide.clear(mProfileImage);
                         if(map.get("profileImageUrl")!=null){
                             profileImageUrl=map.get("profileImageUrl").toString();
@@ -338,7 +338,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(SettingsActivity.this, "Fail upload image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, "Fails to upload image", Toast.LENGTH_SHORT).show();
             }
         });}
         private void saveUserInformation(){

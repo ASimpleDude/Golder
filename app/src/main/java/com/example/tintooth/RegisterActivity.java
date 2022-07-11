@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mRegister;
     private TextView existing;
     private ProgressBar spinner;
-    private EditText mEmail, mPassword, mName, mBudget;
+    private EditText mEmail, mPassword, mName, mPhone;
     private RadioGroup mRadioGroup;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -47,25 +47,26 @@ public class RegisterActivity extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                spinner.setVisibility(View.VISIBLE);
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user != null && user.isEmailVerified()){
-                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
-                    spinner.setVisibility(View.GONE);
-                    return;
-                }
-                spinner.setVisibility(View.GONE);
-            }
-        };
+//        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                spinner.setVisibility(View.VISIBLE);
+//                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                if(user != null && user.isEmailVerified()){
+//                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+//                    startActivity(i);
+//                    finish();
+//                    spinner.setVisibility(View.GONE);
+//                    return;
+//                }
+//                spinner.setVisibility(View.GONE);
+//            }
+//        };
         existing = (TextView) findViewById(R.id.existing);
         mRegister = (Button) findViewById(R.id.register);
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
+        mPhone = (EditText) findViewById(R.id.phone_number);
         mName = (EditText) findViewById(R.id.name);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox1);
         TextView textview = (TextView) findViewById(R.id.textView2);
@@ -88,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
                 final String name = mName.getText().toString();
+                final String phone = mPhone.getText().toString();
                 final Boolean tnc = checkBox.isChecked();
                 if(checkInputs(email, name, password, tnc)){
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -105,6 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
                                             DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                                             Map userInfo = new HashMap<>();
                                             userInfo.put("name", name);
+                                            userInfo.put("phone", phone);
+                                            userInfo.put("gender", "Others");
+                                            userInfo.put("description", "");
                                             userInfo.put("profileImageUrl", "default");
                                             currentUserDb.updateChildren(userInfo);
                                             mEmail.setText("");
@@ -145,17 +150,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(firebaseAuthStateListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mAuth.removeAuthStateListener(firebaseAuthStateListener);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mAuth.addAuthStateListener(firebaseAuthStateListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        mAuth.removeAuthStateListener(firebaseAuthStateListener);
+//    }
 
     @Override
     public void onBackPressed() {

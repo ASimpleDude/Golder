@@ -4,9 +4,9 @@ public class cards {
     private String userId;
     private String name;
     private String profileImageUrl;
-    private String need;
-    private String give;
-    private String budget;
+    private String gender;
+    private String description;
+    private String phone;
 
     public cards(String userId){
         this.userId = userId;
@@ -17,13 +17,13 @@ public class cards {
         this.name = name;
     }
 
-    public cards(String userId, String name, String profileImageUrl, String need, String give, String budget) {
+    public cards(String userId, String name, String profileImageUrl, String gender, String description, String phone) {
         this.userId = userId;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
-        this.need = need;
-        this.give = give;
-        this.budget = budget;
+        this.gender = gender;
+        this.description = description;
+        this.phone = phone;
     }
 
     public String getUserId() {
@@ -50,27 +50,27 @@ public class cards {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public String getNeed() {
-        return need;
+    public String getGender() {
+        return gender;
     }
 
-    public void setNeed(String need) {
-        this.need = need;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getGive() {
-        return give;
+    public String getDescription() {
+        return description;
     }
 
-    public void setGive(String give) {
-        this.give = give;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getBudget() {
-        return budget;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setBudget(String budget) {
-        this.budget = budget;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

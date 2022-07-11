@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 cards card = (cards) dataObject;
                 String userId = card.getUserId();
                 usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
-                Toast.makeText(MainActivity.this, card.getName()+" Nope", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, card.getName()+" Disliked", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 String userId = card.getUserId();
                 usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 isConnectionMatch(userId);
-                Toast.makeText(MainActivity.this, card.getName()+" Yeps", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, card.getName()+" Liked", Toast.LENGTH_SHORT).show();
             }
 
             @Override
