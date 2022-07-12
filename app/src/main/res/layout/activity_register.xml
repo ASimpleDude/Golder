@@ -36,7 +36,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="First step to join us"
+                        android:text="The first step to join us"
                         android:textColor="@color/yellow"
                         android:textSize="23dp"
                         android:textStyle="bold" />
