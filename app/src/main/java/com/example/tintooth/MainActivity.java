@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,26 +39,29 @@ public class MainActivity extends AppCompatActivity {
     boolean firstStart;
     private cards card_data[];
     private com.example.tintooth.Cards.arrayAdapter arrayAdapter;
-    private int i;
     private ProgressBar pBar ;
     private TextView noOne;
     private DatabaseReference usersDb;
     private String currentUId;
 
     private List<cards> rowItem;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setupTopNavigationView();
-        rowItem = new ArrayList<cards>();
+    private void bindingView(){
         pBar = findViewById(R.id.pBar);
         pBar.setVisibility(View.VISIBLE);
         noOne = findViewById(R.id.noOne);
         noOne.setVisibility(View.GONE);
+
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        bindingView();
+        setupTopNavigationView();
+        rowItem = new ArrayList<>();
+
         usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
         currentUId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        getUserInfo();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -97,13 +99,12 @@ public class MainActivity extends AppCompatActivity {
         });
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItem );
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+        SwipeFlingAdapterView flingContainer = findViewById(R.id.frame);
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 rowItem.remove(0);
                 arrayAdapter.notifyDataSetChanged();
@@ -111,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
                 cards card = (cards) dataObject;
                 String userId = card.getUserId();
                 usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
@@ -141,13 +139,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
-            }
-        });
+        flingContainer.setOnItemClickListener((itemPosition, dataObject) -> Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show());
     }
 
     private void isConnectionMatch(String userId){

@@ -37,17 +37,14 @@ public class BtnLikeActivity extends AppCompatActivity {
                 Glide.with(mContext).load(profileUrl).into(like);
                 break;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-                Intent mainIntent = new Intent(BtnLikeActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
             }
+            Intent mainIntent = new Intent(BtnLikeActivity.this, MainActivity.class);
+            startActivity(mainIntent);
         }).start();
     }
 

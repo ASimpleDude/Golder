@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,98 +38,84 @@ public class RegisterActivity extends AppCompatActivity {
     private String emailPattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
     private static final String TAG = "RegisterActivity";
 
+    private void bindingView(){
+        spinner =findViewById(R.id.pBar);
+        spinner.setVisibility(View.GONE);
+        existing = findViewById(R.id.existing);
+        mRegister = findViewById(R.id.register);
+        mEmail =  findViewById(R.id.email);
+        mPassword =  findViewById(R.id.password);
+        mPhone =  findViewById(R.id.phone_number);
+        mName =  findViewById(R.id.name);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        spinner = (ProgressBar) findViewById(R.id.pBar);
-        spinner.setVisibility(View.GONE);
+        bindingView();
+
+
 
         mAuth = FirebaseAuth.getInstance();
-//        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                spinner.setVisibility(View.VISIBLE);
-//                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                if(user != null && user.isEmailVerified()){
-//                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-//                    startActivity(i);
-//                    finish();
-//                    spinner.setVisibility(View.GONE);
-//                    return;
-//                }
-//                spinner.setVisibility(View.GONE);
-//            }
-//        };
-        existing = (TextView) findViewById(R.id.existing);
-        mRegister = (Button) findViewById(R.id.register);
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        mPhone = (EditText) findViewById(R.id.phone_number);
-        mName = (EditText) findViewById(R.id.name);
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox1);
-        TextView textview = (TextView) findViewById(R.id.textView2);
+
+        final CheckBox checkBox =  findViewById(R.id.checkbox1);
+        TextView textview =  findViewById(R.id.textView2);
         checkBox.setText("");
         textview.setText(Html.fromHtml("I have read and agreed to the "+"<a href = 'https://www.blogger.com/blog/post/edit/preview/5691680832129275873/394601829011768046'> Terms and Conditions</a>"));
         textview.setClickable(true);
         textview.setMovementMethod(LinkMovementMethod.getInstance());
-        existing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setVisibility(View.VISIBLE);
-                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
+        existing.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
+            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(i);
         });
-        mRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setVisibility(View.VISIBLE);
-                final String email = mEmail.getText().toString();
-                final String password = mPassword.getText().toString();
-                final String name = mName.getText().toString();
-                final String phone = mPhone.getText().toString();
-                final Boolean tnc = checkBox.isChecked();
-                if(checkInputs(email, name, password, tnc)){
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }else{
-                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(RegisterActivity.this, "Registration successful, please check your email for verification.", Toast.LENGTH_SHORT).show();
-                                            String userId = mAuth.getCurrentUser().getUid();
-                                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-                                            Map userInfo = new HashMap<>();
-                                            userInfo.put("name", name);
-                                            userInfo.put("phone", phone);
-                                            userInfo.put("gender", "Others");
-                                            userInfo.put("description", "");
-                                            userInfo.put("profileImageUrl", "default");
-                                            currentUserDb.updateChildren(userInfo);
-                                            mEmail.setText("");
-                                            mName.setText("");
-                                            mPassword.setText("");
-                                            Intent i = new Intent(RegisterActivity.this, Choose_Login_And_Reg.class);
-                                            startActivity(i);
-                                            finish();
-                                            return;
-                                        }
-                                        else{
-                                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
+        mRegister.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
+            final String email = mEmail.getText().toString();
+            final String password = mPassword.getText().toString();
+            final String name = mName.getText().toString();
+            final String phone = mPhone.getText().toString();
+            final Boolean tnc = checkBox.isChecked();
+            if(checkInputs(email, name, password, tnc)){
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "Registration successful, please check your email for verification.", Toast.LENGTH_SHORT).show();
+                                        String userId = mAuth.getCurrentUser().getUid();
+                                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                                        Map userInfo = new HashMap<>();
+                                        userInfo.put("name", name);
+                                        userInfo.put("phone", phone);
+                                        userInfo.put("gender", "Others");
+                                        userInfo.put("description", "");
+                                        userInfo.put("profileImageUrl", "default");
+                                        currentUserDb.updateChildren(userInfo);
+                                        mEmail.setText("");
+                                        mName.setText("");
+                                        mPassword.setText("");
+                                        Intent i = new Intent(RegisterActivity.this, Choose_Login_And_Reg.class);
+                                        startActivity(i);
+                                        finish();
+                                        return;
                                     }
-                                });
-                            }
+                                    else{
+                                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
-                    });
-                }
-                spinner.setVisibility(View.GONE);
+                    }
+                });
             }
+            spinner.setVisibility(View.GONE);
         });
     }
     private boolean checkInputs(String email, String username, String password, Boolean tnc){
@@ -148,19 +133,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        mAuth.addAuthStateListener(firebaseAuthStateListener);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        mAuth.removeAuthStateListener(firebaseAuthStateListener);
-//    }
 
     @Override
     public void onBackPressed() {

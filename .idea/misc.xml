@@ -3,7 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1995" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/activity_matches.xml" value="0.22395833333333334" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/activity_register.xml" value="0.1598731884057971" />
         <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/activity_settings.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/item.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/item_chat.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/item_matches.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/item_profile.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/layout_top_navigation_back.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/layout_top_navigation_view.xml" value="0.17604166666666668" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/login.xml" value="0.22395833333333334" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/splash_screen.xml" value="0.1598731884057971" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/swipecard.xml" value="0.22395833333333334" />
+        <entry key="..\:/AndroidStudioCode/Golder/app/src/main/res/layout/toolbar.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ADMIN/Desktop/Golder/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/ADMIN/Desktop/Golder/app/src/main/res/layout/activity_register.xml" value="0.253125" />
         <entry key="..\:/Users/ADMIN/Desktop/Golder/app/src/main/res/layout/login.xml" value="0.1" />

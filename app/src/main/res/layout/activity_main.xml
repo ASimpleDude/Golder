@@ -71,13 +71,15 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/noOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="369dp"
+                android:layout_height="79dp"
                 android:layout_gravity="center"
-                android:text="There is no one new around you"
-                android:visibility="invisible"/>
+                android:text="Seem like there is no one new around you"
+                android:textSize="25dp"
+                android:visibility="visible" />
         </FrameLayout>
     </RelativeLayout>
     <ProgressBar

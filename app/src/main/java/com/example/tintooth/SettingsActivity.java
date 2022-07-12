@@ -2,8 +2,6 @@ package com.example.tintooth;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -32,14 +30,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -66,103 +60,77 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
     private String userId, userName, userPhone, profileImageUrl, userGender, userDescription;
-    private int genderIndex;
     private Uri resultUri;
-    private Toolbar toolbar;
-    private ActivityResultLauncher<Intent> mActivityResultLauncher
-            = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-        if (result.getResultCode()==RESULT_OK){
-            Intent intent = result.getData();
-            if (intent==null) return;
-            Uri uri = intent.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        }
-    });
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+    private final ActivityResultLauncher<Intent> mActivityResultLauncher
+            = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-        spinner = (ProgressBar) findViewById(R.id.pBar);
+            });
+    private void bindingView() {
+        spinner = findViewById(R.id.pBar);
         spinner.setVisibility(View.GONE);
 
-        mNameField = (EditText) findViewById(R.id.name);
-        mPhoneField = (EditText) findViewById(R.id.phone);
-        mDesField= (EditText) findViewById(R.id.description_setting) ;
+        mNameField = findViewById(R.id.name);
+        mPhoneField = findViewById(R.id.phone);
+        mDesField= findViewById(R.id.description_setting) ;
 
-        mProfileImage = (ImageView) findViewById(R.id.profileImage);
+        mProfileImage =  findViewById(R.id.profileImage);
         mBack = findViewById(R.id.settingsBack);
 
-        mConfirm = (Button) findViewById(R.id.confirm);
-        mGender = (Spinner) findViewById(R.id.spinner_gender_settings);
+        mConfirm = findViewById(R.id.confirm);
+        mGender =  findViewById(R.id.spinner_gender_settings);
 
         androidx.appcompat.widget.Toolbar toolbar= findViewById(R.id.settings_toolbartag);
         setSupportActionBar(toolbar);
 
-        mAuth = FirebaseAuth.getInstance();
-        if (mAuth != null && mAuth.getCurrentUser() != null)
-            userId = mAuth.getCurrentUser().getUid();
-
-        else {
-            Toast.makeText(this, "Not login", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-        Toast.makeText(this, "User"+userId, Toast.LENGTH_SHORT).show();
-        getUserInfo();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genders,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mGender.setAdapter(adapter);
+    }
+    private void bindingAction(){
+        mProfileImage.setOnClickListener(v -> {
 
-
-
-
-        mProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(!checkPermission()){
-                    Toast.makeText(SettingsActivity.this, "Allow access to continue!", Toast.LENGTH_SHORT).show();
-                    requestPermission();
-                }
-                else{
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    startActivityForResult(intent,1);
-                }
+            if(!checkPermission()){
+                Toast.makeText(SettingsActivity.this, "Allow access to continue!", Toast.LENGTH_SHORT).show();
+                requestPermission();
+            }
+            else{
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,1);
             }
         });
-        mConfirm.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                saveUserInformation();
-//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-//                startActivity(intent);
-//
-//                finish();
-//                return;
-            }
-        });
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setVisibility(View.VISIBLE);
-//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                finish();return;
-            }
-        });
+        mConfirm.setOnClickListener(v -> saveUserInformation());
 
+        mBack.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
+            finish();return;
+        });
 
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        bindingView();
+        bindingAction();
+
+         mAuth = FirebaseAuth.getInstance();
+        if (mAuth != null && mAuth.getCurrentUser() != null)
+            userId = mAuth.getCurrentUser().getUid();
+        else {
+            Toast.makeText(this, "Not login", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        Toast.makeText(this, "User"+userId, Toast.LENGTH_SHORT).show();
+
+        getUserInfo();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -231,7 +199,6 @@ public class SettingsActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                         spinner.setVisibility(View.GONE);
-                                        return;
                                     }
                                     else{
                                         Toast.makeText(SettingsActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -240,8 +207,8 @@ public class SettingsActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                         spinner.setVisibility(View.VISIBLE);
-                                        return;
                                     }
+                                    return;
                                 }
                             });
                         }
@@ -305,16 +272,16 @@ public class SettingsActivity extends AppCompatActivity {
                         mPhoneField.setText(userPhone);
                     }if(map.get("gender")!=null){
                         userGender=map.get("gender").toString();
-                        //add set spinner here
+
 
                     }
                     if(map.get("description")!=null){
                         userDescription=map.get("description").toString();
                         mDesField.setText(userDescription);
                     }
-                    if (userGender.toString().equals("Male")){
+                    if (userGender.equals("Male")){
                         mGender.setSelection(0);
-                    } else if (userGender.toString().equals("Female")){
+                    } else if (userGender.equals("Female")){
                         mGender.setSelection(1);
                     } else {
                         mGender.setSelection(2);
@@ -368,24 +335,16 @@ public class SettingsActivity extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
                 byte[] data = baos.toByteArray();
                 UploadTask uploadTask = filepath.putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        finish();
-                    }
-                });
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uri.isComplete());
-                        Uri downloadUri = uri.getResult();
-                        Map userInfo = new HashMap();
-                        userInfo.put("profileImageUrl", downloadUri.toString());
-                        mUserDatabase.updateChildren(userInfo);
-                        finish();
-                        return;
-                    }
+                uploadTask.addOnFailureListener(e -> finish());
+                uploadTask.addOnSuccessListener(taskSnapshot -> {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uri.isComplete());
+                    Uri downloadUri = uri.getResult();
+                    Map userInfo1 = new HashMap();
+                    userInfo1.put("profileImageUrl", downloadUri.toString());
+                    mUserDatabase.updateChildren(userInfo1);
+                    finish();
+                    return;
                 });
             } else{finish();}
         }
