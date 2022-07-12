@@ -31,9 +31,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutView.setLayoutParams(lp);
-        ChatViewHolder rcv = new ChatViewHolder(layoutView);
 
-        return rcv;
+        return new ChatViewHolder(layoutView);
     }
 
     @Override

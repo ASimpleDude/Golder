@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -165,10 +166,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(item.getItemId()==R.id.Contact){
             new AlertDialog.Builder(SettingsActivity.this)
-                    .setTitle("Contact Us")
-                    .setMessage("hong pé ưi")
+                    .setTitle("About Us")
+                    .setMessage("Hoàng Minh Việt\nNguyễn Công Quân\n Bùi Thanh Tùng\n Phan Đức Mạnh")
                     .setNegativeButton("Dismiss", null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+
                     .show();
         }
         else if(item.getItemId()==R.id.logout){

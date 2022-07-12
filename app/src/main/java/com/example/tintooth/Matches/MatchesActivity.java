@@ -1,28 +1,22 @@
 package com.example.tintooth.Matches;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.service.autofill.FieldClassification;
-import android.text.format.DateUtils;
-import android.view.View;
-import android.widget.ImageButton;
-
-import com.example.tintooth.Cards.cards;
 import com.example.tintooth.MainActivity;
 import com.example.tintooth.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -46,15 +40,12 @@ public class MatchesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
         mBack = findViewById(R.id.matchesBack);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MatchesActivity.this, MainActivity.class);
-                startActivity(i);
-            }
+        mBack.setOnClickListener(v -> {
+            Intent i = new Intent(MatchesActivity.this, MainActivity.class);
+            startActivity(i);
         });
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mRecyclerView = findViewById(R.id.recycleView);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
         mMatchesLayoutManager = new LinearLayoutManager(MatchesActivity.this);
@@ -139,87 +130,9 @@ public class MatchesActivity extends AppCompatActivity {
             }
         });
     }
-//    private void getUserMatchId(){
-//        Query sortedMatchesMyLastTimeStamp = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("connections").child("matches").orderByChild("lastTimeStamp");
-//        sortedMatchesMyLastTimeStamp.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.exists()){
-//                    for(DataSnapshot match: snapshot.getChildren()){
-//                        FetchMatchInformation(match.getKey(), match.child("Chatid").toString());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-
-//    private void FetchMatchInformation(final String key, final String chatid) {
-//        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
-//        getLastMessageInfo(userDb);
-//        userDb.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.exists()){
-//                    String userId = snapshot.getKey();
-//                    String name = "";
-//                    String profileImageUrl = "";
-//                    String need = "";
-//                    String give = "";
-//                    String budget = "";
-//                    final String lastMessage = "";
-//                    String lastTimeStamp = "";
-//                    if(snapshot.child("name").getValue()!=null){
-//                        name = snapshot.child("name").getValue().toString();
-//                    }
-//                    if(snapshot.child("profileImageUrl").getValue()!=null){
-//                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
-//                    }
-//                    if(snapshot.child("need").getValue()!=null){
-//                        need = snapshot.child("need").getValue().toString();
-//                    }
-//                    if(snapshot.child("give").getValue()!=null){
-//                        give = snapshot.child("give").getValue().toString();
-//                    }
-//                    if(snapshot.child("budget").getValue().toString()!=null){
-//                        budget = snapshot.child("budget").getValue().toString();
-//                    }
-//                    String milliSec = mLastTimeStamp;
-//                    Long now;
-//                    try{
-//                        now = Long.parseLong(milliSec);
-//                        lastTimeStamp = convertMilliToRelative(now);
-//                        String[] arrOfStr = lastTimeStamp.split(",");
-//                        mLastTimeStamp = arrOfStr[0];
-//                    }catch (Exception e){
-//
-//                    }
-//                    MatchesObject obj = new MatchesObject(userId, name, profileImageUrl, need, give, budget, mLastMessage, mLastTimeStamp, chatid, lastMessage);
-//                    if(mList.containsKey(chatid)){
-//                        int key = mList.get(chatid);
-//                        resultsMatches.set(resultsMatches.size() - key, obj);
-//                    }else{
-//                        resultsMatches.add(0, obj);
-//                        mList.put(chatid, resultsMatches.size());
-//                    }
-//                    mMatchesAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private String convertMilliToRelative(Long now) {
-        String time = DateUtils.getRelativeDateTimeString(this, now, DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
-        return time;
+        return DateUtils.getRelativeDateTimeString(this, now, DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     private ArrayList<MatchesObject> resultsMatches = new ArrayList<>();

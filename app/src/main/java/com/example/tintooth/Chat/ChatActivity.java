@@ -1,36 +1,17 @@
 package com.example.tintooth.Chat;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.Image;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.example.tintooth.Matches.MatchesActivity;
 import com.example.tintooth.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,21 +81,13 @@ public class ChatActivity extends AppCompatActivity {
         mBack = findViewById(R.id.chatBack);
         mSendButton = findViewById(R.id.send);
 
-        mSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage();
-            }
-        });
+        mSendButton.setOnClickListener(v -> sendMessage());
 
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ChatActivity.this, MatchesActivity.class);
-                startActivity(i);
-                finish();
-                return;
-            }
+        mBack.setOnClickListener(v -> {
+            Intent i = new Intent(ChatActivity.this, MatchesActivity.class);
+            startActivity(i);
+            finish();
+            return;
         });
 
 
